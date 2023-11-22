@@ -32,6 +32,23 @@ public:
 		return this->name;
 	}
 
+	char* getDate() {
+		return Util::copyString(this->date);
+	}
+
+	char* getBands() {
+		return Util::copyString(this->bands);
+	}
+
+	char* getSponsors() {
+		return Util::copyString(this->sponsors);
+	}
+
+	//Location* getLocationEvent() {
+		//return Util::copyString(this->locationEvent);}
+
+	
+
 	void setName(string newName) {
 		//validate input
 		
@@ -66,10 +83,6 @@ public:
 		}
 
 		strcpy_s(this->date, newDate);
-	}
-
-	char* getDate() {
-		return Util::copyString(this->date);
 	}
 
 };

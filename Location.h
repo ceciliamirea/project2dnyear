@@ -25,17 +25,40 @@ private:
 
 public:
 	
-	void getName() {
+	char* getName() {
 		return this->name;
+	}
+
+	char* getAdress() {
+		return this->Util::copyString(address);
+	}
+
+	int getNoTables() {
+		return this->noTables;
+	}
+
+	int getNoChairs() {
+		return this->noChairs;
+	}
+
+	int getNoVipTables() {
+		return this->getNoVipTables;
 	}
 
 	void setAdress(const char* eventAddress) {
 		this->address = Util::copyString(eventAddress);
 	}
-	
-	void getAdress() {
-		return this->address;
+
+	void setNoTables(int noTablesEvent) {
+		this->noTables = noTablesEvent;
 	}
-
-
+	void setNoChairs(int noChairsEvent) {
+		this->noChairs = noChairsEvent;
+	}
+	
+	void setnoVipTables(int noVipTablesEvent) {
+		this->noVipTables = noVipTablesEvent;
+	}
+	
 };
+
