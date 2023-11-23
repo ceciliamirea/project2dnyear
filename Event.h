@@ -59,8 +59,14 @@ public:
 		this->name = newName;
 	}
 
-	void setBands(const char* panelBands) {
-		this->bands = Util::copyString(panelBands);
+	void setBands(const char* panelBands, int noBands) {
+		
+		for (int i = 0; i < noBands; i++) {
+			if (panelBands[i] == "") {
+				throw exception("Wrong number of bands.");
+			}
+			this->bands[i] = panelBands[i];
+		}
 	}
 
 	void setLocation(Location* location)
@@ -68,10 +74,18 @@ public:
 		if (location != locationEvent) {
 			throw exception("Wrong location");
 	    }
+
+		this->location = locationEvent;
 	}
 
-	void setSponsors(char* sponsorsEvent) {
-		this->sponsors = Util::copyString(sponsorsEvent);
+	void setSponsors(char* sponsorsEvent, int noSponsors) {
+
+		for (int i = 0; i < noSponsors; i++) {
+			if (sponsorsEvent[i] == "") {
+				throw exception("Wrong number of sponsors");
+			}
+			this->sponsors[i] = sponsorsEvent[i];
+		}
 	}
 
 	void setDate(const char* newDate) {
@@ -85,4 +99,39 @@ public:
 		strcpy_s(this->date, newDate);
 	}
 
+	string* getRoadmap() {
+		string* copy = new string[this->noLocations];
+		for (int i = 0; i < this->noLocations; i++) {
+			copy[i] = this->roadmap[i];
+		}
+		return copy;
+	}
+
+	//void setRoadmap(string* newRoadmap, int noLocations) {
+	//	//shallow copy
+	//	//this->roadmap = newRoadmap;
+
+	//	//deep copy
+	//	this->roadmap = new string[noLocations];
+	//	for (int i = 0; i < noLocations; i++) {
+	//		this->roadmap[i] = newRoadmap[i];
+	//	}
+	//	this->noLocations = noLocations;
+	//}
+
+	Event() {
+		this->setName("Alternative Night");
+		this->setDate("15/12/2023");
+		this->setLocation("The Place");
+		this->setBands({ "Alternosfera", "The Mono Jacks", "Byron", "Dirty Shirt" },4);
+		this->setSponsors({ "Rock FM", "IaBilet", "Motoland" },3);
+	}
+	Event(const string name, char date, char* bands, char* sponsors, Location locationEvent, int noBands, int noSponsors) {
+
+		this->setName(name);
+		this->setDate(date);
+		this->setBands(bands,noBands);
+		this->setLocation(locationEvent);
+		this->setSponsors(sponsors, noSponsors);
+	}
 };

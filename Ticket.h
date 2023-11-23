@@ -34,11 +34,17 @@ public:
 		return this->isVip;
 	}
 
-	void setPrice(int ticktPrice) {
+	void setPrice(int ticketPrice) {
+		if (ticketPrice <= 0) {
+			throw exception("wrong price")
+		}
 		this->price = ticketPrice;
 	}
 
 	void setVipPrice(int vipPriceEvent) {
+		if (vipPriceEvent <= 0) {
+			throw exception("wrong price")
+		}
 		this->vipPrice = vipPriceEvent;
 	}
 

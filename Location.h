@@ -29,7 +29,7 @@ public:
 		return this->name;
 	}
 
-	char* getAdress() {
+	char* getAddress() {
 		return this->Util::copyString(address);
 	}
 
@@ -45,7 +45,16 @@ public:
 		return this->getNoVipTables;
 	}
 
-	void setAdress(const char* eventAddress) {
+	void setName(string newName) {
+		//validate input
+
+		if (newName[0] < 'A' || newName[0] > 'Z') {
+			throw exception("First letter is not capital letter");
+		}
+
+		this->name = newName;
+	}
+	void setAddress(const char* eventAddress) {
 		this->address = Util::copyString(eventAddress);
 	}
 
@@ -60,5 +69,22 @@ public:
 		this->noVipTables = noVipTablesEvent;
 	}
 	
+	Location() {
+		this->setName("The place");
+		this->setAddress( "Liberty Street number 5" );
+		this->setNoTables(20);
+		this->setnoVipTables(5);
+		this->setNoChairs(100);
+	}
+
+	Location(char* name, char* address, int noTables, int noVipTables, int noChairs) {
+		this->setName(name);
+		this->setAddress(address);
+		this->setNoTables(noTables);
+		this->setnoVipTables(noVipTables);
+		this->setNoChairs(noChairs);
+	}
+
 };
+
 
