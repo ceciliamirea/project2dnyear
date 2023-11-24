@@ -16,7 +16,6 @@ public:
 
 class Event {
 private:
-	int eventID=0;
 	const string name;
 	char date[11] = ""; //dd/mm/yyyy
 	char* bands[10];
@@ -99,26 +98,7 @@ public:
 		strcpy_s(this->date, newDate);
 	}
 
-	string* getRoadmap() {
-		string* copy = new string[this->noLocations];
-		for (int i = 0; i < this->noLocations; i++) {
-			copy[i] = this->roadmap[i];
-		}
-		return copy;
-	}
-
-	//void setRoadmap(string* newRoadmap, int noLocations) {
-	//	//shallow copy
-	//	//this->roadmap = newRoadmap;
-
-	//	//deep copy
-	//	this->roadmap = new string[noLocations];
-	//	for (int i = 0; i < noLocations; i++) {
-	//		this->roadmap[i] = newRoadmap[i];
-	//	}
-	//	this->noLocations = noLocations;
-	//}
-
+	
 	Event() {
 		this->setName("Alternative Night");
 		this->setDate("15/12/2023");
@@ -134,4 +114,7 @@ public:
 		this->setLocation(locationEvent);
 		this->setSponsors(sponsors, noSponsors);
 	}
+
+	
+
 };

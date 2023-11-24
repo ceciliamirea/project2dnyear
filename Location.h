@@ -16,9 +16,9 @@ public:
 
 class Location {
 private:
+	char* tableId = 0;
 	char* name[10];
 	char* address[25];
-	//Event** events = nullptr;
 	int noTables=0;
 	int noChairs=0;
 	int noVipTables=0;
@@ -45,6 +45,9 @@ public:
 		return this->getNoVipTables;
 	}
 
+	char* getTableId() {
+		return this->tableId;
+	}
 	void setName(string newName) {
 		//validate input
 
@@ -55,6 +58,7 @@ public:
 		this->name = newName;
 	}
 	void setAddress(const char* eventAddress) {
+		if(eventAddress)
 		this->address = Util::copyString(eventAddress);
 	}
 
@@ -68,10 +72,14 @@ public:
 	void setnoVipTables(int noVipTablesEvent) {
 		this->noVipTables = noVipTablesEvent;
 	}
+
+	void setTableId() {
+		this->tableId = genRandom;
+	}
 	
 	Location() {
 		this->setName("The place");
-		this->setAddress( "Liberty Street number 5" );
+		this->setAddress( "Liberty Street" );
 		this->setNoTables(20);
 		this->setnoVipTables(5);
 		this->setNoChairs(100);
@@ -83,6 +91,26 @@ public:
 		this->setNoTables(noTables);
 		this->setnoVipTables(noVipTables);
 		this->setNoChairs(noChairs);
+	}
+
+	static const char alphanum[] =
+		"0123456789"
+		"!@#$%^&*"
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		"abcdefghijklmnopqrstuvwxyz";
+
+	int stringLength = sizeof(alphanum) - 1;
+
+	char* genRandom()
+	{
+		char* id = new char[9];
+		srand(time(NULL));
+		for (unsigned int i = 0; i < 8; ++i)
+		{
+			id[i] += alphanum[rand() % stringLength];
+
+		}
+		return id;
 	}
 
 };
