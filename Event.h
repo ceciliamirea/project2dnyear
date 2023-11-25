@@ -46,11 +46,11 @@ public:
 	//Location* getLocationEvent() {
 		//return Util::copyString(this->locationEvent);}
 
-	
+
 
 	void setName(string newName) {
 		//validate input
-		
+
 		if (newName[0] < 'A' || newName[0] > 'Z') {
 			throw exception("First letter is not capital letter");
 		}
@@ -59,7 +59,7 @@ public:
 	}
 
 	void setBands(const char* panelBands, int noBands) {
-		
+
 		for (int i = 0; i < noBands; i++) {
 			if (panelBands[i] == "") {
 				throw exception("Wrong number of bands.");
@@ -72,7 +72,7 @@ public:
 	{
 		if (location != locationEvent) {
 			throw exception("Wrong location");
-	    }
+		}
 
 		this->location = locationEvent;
 	}
@@ -98,23 +98,41 @@ public:
 		strcpy_s(this->date, newDate);
 	}
 
-	
+
 	Event() {
 		this->setName("Alternative Night");
 		this->setDate("15/12/2023");
 		this->setLocation("The Place");
-		this->setBands({ "Alternosfera", "The Mono Jacks", "Byron", "Dirty Shirt" },4);
-		this->setSponsors({ "Rock FM", "IaBilet", "Motoland" },3);
+		this->setBands({ "Alternosfera", "The Mono Jacks", "Byron", "Dirty Shirt" }, 4);
+		this->setSponsors({ "Rock FM", "IaBilet", "Motoland" }, 3);
 	}
 	Event(const string name, char date, char* bands, char* sponsors, Location locationEvent, int noBands, int noSponsors) {
 
 		this->setName(name);
 		this->setDate(date);
-		this->setBands(bands,noBands);
+		this->setBands(bands, noBands);
 		this->setLocation(locationEvent);
 		this->setSponsors(sponsors, noSponsors);
 	}
 
-	
+
+	void cancelBand(char* aBand) {
+		bool found = false;
+		for (int i = 0; i < sizeof(this->bands); i++) {
+			if (strcmp(aBand, this->bands) == 0) {
+				found = true;
+
+				for (int j = i; j < sizeof(this->bands) - 1; j++) {
+					//this->bands[j] = this->bands[j + 1];
+					strcpy(this->bands[j], this->bands[j + 1]);
+				}
+				delete[] this->bands[j + 1];
+			}
+		}
+
+		if (found == false) {
+			throw exception("Wrong band.");
+		}
+	}
 
 };
