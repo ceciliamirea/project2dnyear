@@ -2,15 +2,41 @@
 #include <string>
 #include "Ticket.h"
 #include "Location.h"
+#include "Event.h"
 using namespace std;
 
 int main()
 {
-    Ticket* t = new Ticket;
-    Location* l = new Location;
+	Location location;
+	cout << location;
+	cout << endl;
+	cout << location.getAddress() << endl;
+	cout << location.getName() << endl;
+	cout << location.getNoTables();
+	cout << endl;
 
-    l->setAddress("?");
-    cout << l->getAddress();
-    cout << l;
+	location.setName("Bucuresti");
+	cout << location;
+
+	Location loc("Ct", "Adr", 15, 4);
+	cout << loc;
+
+	Location ceva = ++loc;
+	cout << ceva;
+
+	Ticket ticket;
+	cout << ticket;
+	cout << endl;
+	cout << ticket.getPrice() << endl;
+	cout << ticket.getTicketID() << endl;
+
+	Event event;
+	cout << event;
+	cout << endl;
+	cout << event.getName() << endl;
+	cout << event.getSpecificBand(1) << endl;
+	event.setDate("27/08/2024");
+	cout << event;
+
 }
 

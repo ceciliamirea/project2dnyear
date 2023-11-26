@@ -1,37 +1,10 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "Util.h"
+
 using namespace std;
 
-class Util1 {
-public:
-	static char* copyString(const char* source) {
-		if (source == nullptr) {
-			return nullptr;
-		}
-		char* value = new char[strlen(source) + 1];
-		strcpy_s(value, strlen(source) + 1, source);
-		return value;
-	}
-	static char* genRandom()
-	{
-		static const char alphanum[] =
-			"0123456789"
-			"!@#$%^&*"
-			"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-			"abcdefghijklmnopqrstuvwxyz";
-
-		int stringLength = sizeof(alphanum) - 1;
-		char* id = new char[9];
-		srand(time(NULL));
-		for (unsigned int i = 0; i < 8; ++i)
-		{
-			id[i] += alphanum[rand() % stringLength];
-
-		}
-		return id;
-	}
-};
 
 class Location {
 private:
@@ -39,14 +12,21 @@ private:
 	char* name;
 	char* address;
 	int noTables = 0;
-	int noChairs = 0;
 	int noVipTables = 0;
 
+	static	int TOTAL_CHAIRS;
+
+
 public:
+
+	static int getTotalNoChairs() {
+		return Location::TOTAL_CHAIRS;
+	}
 
 	char* getName() {
 		return this->name;
 	}
+
 
 	char* getAddress() {
 		return this->address;
@@ -56,10 +36,6 @@ public:
 		return this->noTables;
 	}
 
-	int getNoChairs() {
-		return this->noChairs;
-	}
-
 	int getNoVipTables() {
 		return this->noVipTables;
 	}
@@ -67,33 +43,35 @@ public:
 	char* getTableId() {
 		return this->tableId;
 	}
-	void setName(const char* newName) {
-		//validate input
+	void setName(string newName) {
+		delete[] this->name;
 
 		if (newName[0] < 'A' || newName[0] > 'Z') {
 			throw exception("First letter is not capital letter");
 		}
 
-		this->name = Util1::copyString(newName);
+		this->name = Util::copyString(newName.c_str());
 	}
-	void setAddress(const char* eventAddress) {
-		if (eventAddress)
-			this->address = Util1::copyString(eventAddress);
+	void setAddress(string eventAddress) {
+		delete[] this->address;
+
+		this->address = Util::copyString(eventAddress.c_str());
 	}
 
 	void setNoTables(int noTablesEvent) {
+		if (noTablesEvent <= this->noVipTables) throw exception("Wrong number of tables.");
 		this->noTables = noTablesEvent;
 	}
-	void setNoChairs(int noChairsEvent) {
-		this->noChairs = noChairsEvent;
-	}
+
 
 	void setnoVipTables(int noVipTablesEvent) {
+		if (noVipTablesEvent >= this->noTables) throw exception("Wrong number of tables.");
 		this->noVipTables = noVipTablesEvent;
 	}
 
 	void setTableId() {
-		this->tableId = Util1::genRandom();
+		delete[] this->tableId;
+		this->tableId = Util::copyString(Util::printstring(8).c_str());
 	}
 
 	Location() {
@@ -101,32 +79,83 @@ public:
 		this->setAddress("Liberty Street");
 		this->setNoTables(20);
 		this->setnoVipTables(5);
-		this->setNoChairs(100);
+		Location::TOTAL_CHAIRS = this->noTables * 4 + this->noVipTables * 4;
 	}
 
-	Location(char* name, char* address, int noTables, int noVipTables, int noChairs) {
+	Location(string name, string address, int noTables, int noVipTables) {
 		this->setName(name);
 		this->setAddress(address);
 		this->setNoTables(noTables);
 		this->setnoVipTables(noVipTables);
-		this->setNoChairs(noChairs);
+		Location::TOTAL_CHAIRS = noTables * 4 + noVipTables * 4;
 	}
 
 
+	//postfix version
+	Location operator++(int) {
+		Location copy = *this;
+		this->noTables += 5;
+		return copy;
+	}
 
-	friend ostream& operator<<(ostream& console, const Location& loc);
+	//prefix version
+	Location operator++() {
+		this->noTables += 5;
+		return *this;
+	}
+
+	bool operator==(Location l) {
+		if (l.noTables == this->noTables) {
+			return true;
+		}
+		else return false;
+	}
+
+	void ticketPurchased() {
+		this->noTables -= 1;
+	}
+
+	bool checkDisponibility() {
+		if (this->noTables != 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	//destructor
+	~Location() {
+		delete[] this->tableId;
+	}
+
+	friend void operator<<(ostream& console, Location& loc);
+
+	friend void operator>> (istream& is, Location& loc);
 
 };
-//std::ostream& operator<<(std::ostream& console, const Location& loc) {
 
-ostream& operator<<(ostream& console, const Location& loc) {
-	console << endl << "loc name: " << loc.name;
-	console << endl << "loc price: " << loc.address;
-	console << endl << "Current month: " << loc.noTables;
-	console << endl << "Current month: " << loc.noChairs;
-	console << endl << "Current month: " << loc.noVipTables;
+int Location::TOTAL_CHAIRS = 0;
+void operator>>(istream& is, Location& loc) {
+	cout << endl << "Location name: ";
+	is >> loc.name;
+	cout << endl << "Location address: ";
+	is >> loc.address;
+	cout << endl << "Number of current tables: ";
+	is >> loc.noTables;
+	cout << endl << "Number of current Vip tables: ";
+	is >> loc.noVipTables;
 
-	return console;
 }
+
+void operator<<(ostream& console, Location& loc) {
+	console << endl << "Location name: " << loc.name;
+	console << endl << "Location address: " << loc.address;
+	console << endl << "Number of current tables: " << loc.noTables;
+	console << endl << "Number of current chairs: " << loc.TOTAL_CHAIRS;
+	console << endl << "Number of current Vip tables: " << loc.noVipTables;
+
+}
+
 
 
