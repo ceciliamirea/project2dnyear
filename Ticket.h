@@ -155,3 +155,22 @@ void operator<<(ostream& console, Ticket& tic) {
 	console << endl << "Standard price: " << tic.price;
 	console << endl << "VIP price: " << tic.vipPrice;
 }
+
+class DiscountedTicket : public Ticket {
+
+	float discount = 0;
+public:
+	DiscountedTicket() : Ticket(false, 0, 0) {
+	};
+
+	DiscountedTicket(float discount, float price, float vipPrice, bool isVip) : Ticket(isVip, price, vipPrice)
+	{ }
+
+	float getDiscount() {
+		float discprice = 0;
+		discprice = this->getPrice() - (this->discount / 100 * this->getPrice());
+		return discprice;
+	}
+
+
+};
