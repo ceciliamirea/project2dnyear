@@ -4,12 +4,14 @@
 #include "Ticket.h"
 #include "Location.h"
 #include "Event.h"
+#include "AbstractClass.h"
 using namespace std;
 
 //menu for a customer
 
 void MenuChoiceUser1() {
 	int choice;
+	Location l;
 
 	cout << "Choose an option: " << endl;
 	cout << "1. Check disponibility " << endl;
@@ -27,26 +29,31 @@ void MenuChoiceUser1() {
 
 		if (choice == 1) {
 
-			Location locat;
+			//Location locat;
 			//cout << locat.checkDisponibility() << endl;
-			bool check = locat.checkDisponibility();
+			bool check = l.checkDisponibility();
 			if (check == 1) {
-				cout << "There are available tables.";
+				cout << "There are " << l.getNoTables() << " available regular tables and " << l.getNoVipTables() << " available VIP tables." << endl;
 			}
-			else cout << "There are not available tables.";
+			else cout << "There are not available tables." << endl;
 
 		}
 
 		if (choice == 2) {
 			Ticket t;
-			Location l;
+			//Location l;
+			DiscountedTicket dt;
 			int whichType = 0;
-			cout << "The price for a regular table is: " << t.getPrice() << endl;
+			cout << endl << "The price for a regular table is: " << t.getPrice() << endl;
 			cout << "The price for a VIP table is: " << t.getVipPrice() << endl;
-			cout << "Which one would you like?: " << endl << "1. Regular " << endl << "2. VIP " << endl;
+
+			Derivated d;
+
+			d.showMsj();
+			//cout << "Which one would you like?: " << endl << "1. Regular " << endl << "2. VIP " << endl;
 			cin >> whichType;
 			while (whichType != 1 && whichType != 2) {
-				cout << "Please choose one of the two options.";
+				cout << "Please choose one of the two options." << endl;
 				cin >> whichType;
 			}
 
@@ -61,7 +68,7 @@ void MenuChoiceUser1() {
 
 		}
 
-		cout << "Choose an option: " << endl;
+		cout << endl << "Choose an option: " << endl;
 		cout << "1. Check disponibility " << endl;
 		cout << "2. Buy ticket" << endl;
 		cout << "3. Exit" << endl;

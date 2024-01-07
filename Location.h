@@ -113,6 +113,13 @@ public:
 
 	void ticketPurchased() {
 		this->noTables -= 1;
+		cout << "Now there are " << this->noTables << " tables" << endl;
+	}
+
+	void VIPticketPurchased() {
+		this->noVipTables -= 1;
+		cout << "Now there are " << this->noVipTables << " tables" << endl;
+
 	}
 
 	bool checkDisponibility() {

@@ -47,16 +47,16 @@ public:
 
 
 	void setPrice(int ticketPrice) {
-		if (ticketPrice <= 0 || ticketPrice <= this->vipPrice) {
-			throw exception("Wrong price");
-		}
+		/*	if (ticketPrice <= 0 || ticketPrice <= this->vipPrice) {
+				throw exception("Wrong price");
+			}*/
 		this->price = ticketPrice;
 	};
 
-	float setVipPrice(int vipPriceEvent) {
-		if (vipPriceEvent <= 0 || vipPriceEvent <= this->price) {
-			throw exception("Wrong price");
-		}
+	void setVipPrice(float vipPriceEvent) {
+		/*	if (vipPriceEvent <= 0 || vipPriceEvent <= this->price) {
+				throw exception("Wrong price");
+			}*/
 		this->vipPrice = vipPriceEvent;
 	};
 
@@ -79,7 +79,7 @@ public:
 		for (int i = 0; i < 12; i++) {
 			this->soldTicketsPerMonth[i] = 0;
 		}
-		this->bookTable(this->loc);
+		//this->bookTable(this->loc);
 	};
 
 	Ticket(bool isVip, int price, int vipPrice) {
@@ -91,7 +91,7 @@ public:
 		for (int i = 0; i < 12; i++) {
 			this->soldTicketsPerMonth[i] = 0;
 		}
-		this->bookTable(this->loc);
+		//this->bookTable(this->loc);
 
 	};
 
@@ -158,17 +158,21 @@ void operator<<(ostream& console, Ticket& tic) {
 
 class DiscountedTicket : public Ticket {
 
-	float discount = 0;
+	int discount = 0;
 public:
-	DiscountedTicket() : Ticket(false, 0, 0) {
+	DiscountedTicket() : Ticket(false, 30, 45) {
 	};
 
 	DiscountedTicket(float discount, float price, float vipPrice, bool isVip) : Ticket(isVip, price, vipPrice)
 	{ }
 
+	void setDiscount(int discount) {
+		this->discount = discount;
+	}
+
 	float getDiscount() {
 		float discprice = 0;
-		discprice = this->getPrice() - (this->discount / 100 * this->getPrice());
+		discprice = this->getPrice() - ((this->discount * this->getPrice()) / 100.0);
 		return discprice;
 	}
 
