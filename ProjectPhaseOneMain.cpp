@@ -5,6 +5,8 @@
 #include "Location.h"
 #include "Event.h"
 #include "AbstractClass.h"
+#include <fstream>
+#include "File.h"
 using namespace std;
 
 //menu for a customer
@@ -314,5 +316,10 @@ int main()
 
 		MenuChoiceUser2();
 	}
+
+	File file("Text.txt");
+	file.displayContents();
+
+	return 0;
 }
 
