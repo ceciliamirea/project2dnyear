@@ -3,6 +3,7 @@
 #include <string>
 #include "Util.h"
 #include "Location.h"
+#include <vector>
 
 using namespace std;
 
@@ -47,16 +48,12 @@ public:
 
 
 	void setPrice(int ticketPrice) {
-		/*	if (ticketPrice <= 0 || ticketPrice <= this->vipPrice) {
-				throw exception("Wrong price");
-			}*/
+
 		this->price = ticketPrice;
 	};
 
 	void setVipPrice(float vipPriceEvent) {
-		/*	if (vipPriceEvent <= 0 || vipPriceEvent <= this->price) {
-				throw exception("Wrong price");
-			}*/
+
 		this->vipPrice = vipPriceEvent;
 	};
 
@@ -79,7 +76,6 @@ public:
 		for (int i = 0; i < 12; i++) {
 			this->soldTicketsPerMonth[i] = 0;
 		}
-		//this->bookTable(this->loc);
 	};
 
 	Ticket(bool isVip, int price, int vipPrice) {
@@ -91,7 +87,6 @@ public:
 		for (int i = 0; i < 12; i++) {
 			this->soldTicketsPerMonth[i] = 0;
 		}
-		//this->bookTable(this->loc);
 
 	};
 
@@ -124,9 +119,12 @@ public:
 	}
 
 	void bookTable(Location l) {
+
 		l.ticketPurchased();
 
+
 	}
+
 
 	void vipPricefifty() {
 

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "Util.h"
+#include <vector>
 
 using namespace std;
 
@@ -19,9 +20,17 @@ private:
 
 public:
 
+	vector<string> ticketsbought;
+
+
 	static int getTotalNoChairs() {
 		return Location::TOTAL_CHAIRS;
 	}
+
+	void setTicketsBought(string sth) {
+		this->ticketsbought.push_back(sth);
+	}
+
 
 	char* getName() {
 		return this->name;
@@ -113,12 +122,14 @@ public:
 
 	void ticketPurchased() {
 		this->noTables -= 1;
-		cout << "Now there are " << this->noTables << " tables" << endl;
+		cout << "Now there are " << this->noTables << " available tables" << endl;
+
+
 	}
 
 	void VIPticketPurchased() {
 		this->noVipTables -= 1;
-		cout << "Now there are " << this->noVipTables << " tables" << endl;
+		cout << "Now there are " << this->noVipTables << " available tables" << endl;
 
 	}
 

@@ -7,26 +7,16 @@
 #include <fstream>
 using namespace std;
 
-class UtilF {
-public:
-
-    static void readString(ifstream& file, string& value) {
-        int d;
-        file.read((char*)&d, sizeof(int));
-        char buffer[1000];
-        file.read(buffer, d * sizeof(char));
-        value = string(buffer);
-    }
-};
 
 class File {
-private:
-    ifstream inputFile;
 
 public:
+    ifstream inputFile;
+
     File(const string& Text) {
         inputFile.open(Text);
     }
+    File() {}
 
     void displayContents() {
         if (inputFile.is_open()) {
@@ -39,5 +29,25 @@ public:
         else {
             cout << "Unable to open file." << endl;
         }
+    }
+
+    void BinaryFile(string dataf, string fileName) {
+        ofstream inputFile;
+        string s = "/";
+        for (int i = 0; i < fileName.size(); i++)
+            if (s.find(fileName[i]) != -1) {
+                fileName.erase(fileName.begin() + i), i--;
+                fileName.insert(fileName.begin() + i + 1, '_'), i++;
+            }
+        ofstream bf(fileName, ios::binary);
+        if (!bf) {
+            cout << "Unable to open file for writing!" << endl;
+            return;
+        }
+        string data = dataf;
+        bf.write((char*)&data, sizeof(data));
+        bf.close();
+
+
     }
 };

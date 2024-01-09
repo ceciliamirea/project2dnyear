@@ -40,6 +40,7 @@ public:
 
 
 	void setSponsors(string sponsors[], int noSponsors) {
+
 		if (noSponsors > 20) throw exception("Too many sponsors (20 max)");
 		for (int i = 0; i < noSponsors; i++) {
 			this->sponsors[i] = sponsors[i];
@@ -51,6 +52,7 @@ public:
 		if (strlen(newDate) != 10) {
 			throw exception("Wrong date");
 		}
+
 		if (newDate[2] != '/' || newDate[5] != '/') {
 			throw exception("Wrong date format");
 		}
@@ -97,11 +99,12 @@ public:
 	void cancelBand(string aBand) {
 		bool found = false;
 		int i, j;
-		for (i = 0; i < this->bands->size(); i++) {
+
+		for (i = 0; i < sizeof(this->bands) / sizeof(this->bands[0]); i++) {
 			if (aBand.compare(this->bands[i]) == 0) {
 				found = true;
 
-				for (j = i; j < this->bands->size() - 1; j++) {
+				for (j = i; j < sizeof(this->bands) / sizeof(this->bands[0]) - 1; j++) {
 
 					this->bands[j] = this->bands[j + 1];
 
@@ -117,11 +120,11 @@ public:
 	void cancelSponsor(string aSponsor) {
 		bool found = false;
 		int i, j;
-		for (i = 0; i < this->sponsors->size(); i++) {
+		for (i = 0; i < sizeof(this->sponsors) / sizeof(this->sponsors[0]); i++) {
 			if (aSponsor.compare(this->sponsors[i]) == 0) {
 				found = true;
 
-				for (j = i; j < this->sponsors->size() - 1; j++) {
+				for (j = i; j < sizeof(this->sponsors) / sizeof(this->sponsors[0]) - 1; j++) {
 
 					this->sponsors[j] = this->sponsors[j + 1];
 
@@ -158,7 +161,6 @@ void operator>>(istream& is, Event& e) {
 	string i = "";
 	int index = 0;
 	while (i.compare("0") != 0) {
-		//is >> e.bands[index];
 		is >> i;
 		if (i.compare("0") != 0)
 			e.bands[index] = i;
@@ -167,7 +169,6 @@ void operator>>(istream& is, Event& e) {
 	cout << endl << "Sponsors (write 0 if you want to stop): ";
 	index = 0; i = "";
 	while (i.compare("0") != 0) {
-		//is >> e.sponsors[index];
 		is >> i;
 		if (i.compare("0") != 0)
 			e.sponsors[index] = i;
